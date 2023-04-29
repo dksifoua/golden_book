@@ -2,7 +2,8 @@ const path = require("node:path")
 
 const express = require("express")
 const session = require('express-session')
-const {response} = require("express");
+
+const Message = require("./models/message")
 
 const app = express()
 
@@ -22,7 +23,9 @@ app.use(session({
 app.use(require("./middlewares/flash"))
 
 app.get('/', (req, res) => {
-    res.render("pages/index", { message: "Hello world!" })
+    Message.all((messages) => {
+        res.render("pages/index", { messages: messages })
+    })
 })
 
 app.post('/',  (req, res) => {
@@ -30,6 +33,10 @@ app.post('/',  (req, res) => {
         req.flash("error", "You must enter a message :(")
         res.redirect('/')
     }
+    Message.create(req.body.message, () => {
+        req.flash("success", "Thank you for your message :)")
+        res.redirect('/')
+    })
 })
 
 const PORT = 8080
