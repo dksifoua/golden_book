@@ -24,7 +24,7 @@ app.use(require("./middlewares/flash"))
 
 app.get('/', (req, res) => {
     Message.all((messages) => {
-        res.render("pages/index", { messages: messages })
+        res.render("index", { messages: messages })
     })
 })
 
@@ -36,6 +36,12 @@ app.post('/',  (req, res) => {
     Message.create(req.body.message, () => {
         req.flash("success", "Thank you for your message :)")
         res.redirect('/')
+    })
+})
+
+app.get("/messages/:id", (req, res) => {
+    Message.findById(req.params.id, message => {
+        res.render("messages/show", { message: message })
     })
 })
 

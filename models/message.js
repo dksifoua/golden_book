@@ -8,6 +8,10 @@ class Message {
         this.row = row
     }
 
+    get id() {
+        return this.row.id
+    }
+
     get content() {
         return this.row.content
     }
@@ -17,6 +21,8 @@ class Message {
     }
 
     static create(content, callback) {
+
+
         const query = connection.query(
             "insert into messages set content = ?, created_at = ?",
             [content, new Date()],
@@ -30,11 +36,23 @@ class Message {
 
     static all(callback) {
         const query = connection.query(
-            "select * from messages",
+            "select * from messages order by created_at desc",
             (err, rows) => {
                 if(err) throw err
 
                 callback(rows.map(row => new Message(row)))
+            }
+        )
+    }
+
+    static findById(id, callback) {
+        const query = connection.query(
+            "select * from messages where id = ? limit 1",
+            [id],
+            (err, rows) => {
+                if(err) throw err
+
+                callback(new Message(rows[0]))
             }
         )
     }

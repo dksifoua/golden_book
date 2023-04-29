@@ -1,4 +1,4 @@
-<%- include("header") %>
+<%- include("./layouts/header") %>
 
 <form action="/" method="post" class="ui form">
     <div class="field">
@@ -14,7 +14,7 @@
     <h3 class="ui dividing header">Messages</h3>
     <% for(message of messages) { %>
         <div class="comment">
-            <a class="avatar">
+            <a href="/messages/<%= message.id %>" class="avatar">
                 <img src="https://randomuser.me/api/portraits/thumb/men/75.jpg" alt="">
             </a>
             <div class="content">
@@ -29,4 +29,4 @@
     <% } %>
 </div>
 
-<%- include("footer") %>
+<%- include("./layouts/footer") %>
