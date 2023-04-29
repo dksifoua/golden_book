@@ -32,11 +32,12 @@ app.post('/',  (req, res) => {
     if(req.body.message === undefined || req.body.message === '') {
         req.flash("error", "You must enter a message :(")
         res.redirect('/')
+    } else {
+        Message.create(req.body.message, () => {
+            req.flash("success", "Thank you for your message :)")
+            res.redirect('/')
+        })
     }
-    Message.create(req.body.message, () => {
-        req.flash("success", "Thank you for your message :)")
-        res.redirect('/')
-    })
 })
 
 app.get("/messages/:id", (req, res) => {
