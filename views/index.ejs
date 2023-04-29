@@ -15,7 +15,7 @@
     <% for(message of messages) { %>
         <div class="comment">
             <a href="/messages/<%= message.id %>" class="avatar">
-                <img src="https://randomuser.me/api/portraits/thumb/men/75.jpg" alt="">
+                <img src="<%= message.image %>" alt="">
             </a>
             <div class="content">
                 <div class="metadata">
